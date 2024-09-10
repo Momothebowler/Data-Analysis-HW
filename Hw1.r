@@ -23,7 +23,18 @@ plot(data, pnorm(data, mean = mu, sd = std),
 abline(v = mu, col = "red", lty = "dashed")
 dev.off()
 
-print(pnorm(60, mean = mu, sd = std))
-print(pnorm(80, mean = mu, sd = std) - pnorm(50, mean = mu, sd = std))
+print(paste0(
+    "Probability that 60% or less of ",
+    "people in a state are living in urban areas: ",
+    pnorm(60, mean = mu, sd = std)
+), quote = FALSE)
+print(paste0(
+    "Probability that 50% to 80% of",
+    "people in a state are living in urban areas: ",
+    pnorm(80, mean = mu, sd = std) - pnorm(50, mean = mu, sd = std)
+), quote = FALSE)
 
-print(qnorm(0.75, mean = mu, sd = std))
+print(paste0(
+    "The 75th percentile ends at a value of: ",
+    qnorm(0.75, mean = mu, sd = std)
+), quote = FALSE)
