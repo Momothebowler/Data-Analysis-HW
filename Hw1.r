@@ -1,6 +1,9 @@
 data <- USArrests$UrbanPop
-# print(data)
-# plot(data)
+
+png(filename = "Urban_Data.png")
+plot(data)
+dev.off()
+
 mu <- mean(data)
 std <- sd(data)
 normalized <- dnorm(data, mu, std)
@@ -9,7 +12,7 @@ png(filename = "Normalized_Data.png")
 plot(data, normalized,
     col = "blue",
     xlab = "% of Peoples", ylab = "Density",
-    main = "Plot of densities for height data"
+    main = "Plot of densities for Urban Pop data"
 )
 abline(v = mu, col = "red", lty = "dashed")
 dev.off()
@@ -18,7 +21,7 @@ png(filename = "CDF.png")
 plot(data, pnorm(data, mean = mu, sd = std),
     ylab = "Cumulative Distribution Function",
     xlab = "% of People",
-    main = "CDF for height data"
+    main = "CDF for Urban Pop data"
 )
 abline(v = mu, col = "red", lty = "dashed")
 dev.off()
