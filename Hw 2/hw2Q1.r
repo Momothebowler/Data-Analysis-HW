@@ -6,27 +6,37 @@ n <- length(Y)
 m <- sum(Y) / n
 print(paste("Our maximum likelihood estimator is:", m))
 
-# first approach
-Z <- qnorm(.04, lower.tail = FALSE)
 
-lower <- (mean(Y) - sd(Y) / sqrt(n) * Z)
-upper <- (mean(Y) + sd(Y) / sqrt(n) * Z)
-print(paste("Our interval is (", lower, ",", upper, ")"))
+alpha <- 0.08
+df <- 19 - 1
+sample.mean <- mean(Y)
+sample.n <- length(Y)
+sample.sd <- sd(Y)
+sample.se <- sample.sd / sqrt(sample.n)
+t.score <- qt(p = alpha / 2, df = degrees.freedom, lower.tail = F)
+margin.error <- t.score * sample.se
+lower.bound <- sample.mean - margin.error
+upper.bound <- sample.mean + margin.error
+print(c(lower.bound, upper.bound))
 print("Thus we are 92% confident that our mean is in the interval above
  or that 8% of the time is lies outside of it.")
 
-e <- (mean(Y) - 11) / (sd(Y) / sqrt(n))
-zz <- qnorm(.025, lower.tail = FALSE)
-
-print(paste("Since our test statistic:", e, "<", zz, "the Z value with a confidence interval of 95%"))
-print("We reject the null hypothesis where H0 = mu and HA != mu")
-
-# TODO verify above and do the last part of Q1
-
-upperchi <- qchisq(.1 / 2, n - 1, lower.tail = TRUE)
-lowerchi <- qchisq(.1 / 2, n - 1, lower.tail = FALSE)
+t <- (sample.mean - 11) / (sample.sd / sqrt(19))
+ta <- qt(1 - .05 / 2, length(class1) + length(class2) - 2)
+print(t)
+print(ta)
+ewa <- t.test(Y, mu = 11)
+print(ewa)
+# By ewa we see that true mean is not equal to 11
+# as t = 2.3611 which is outside our confidence interval
+# our condfidence intervals almost line up (different alpha values)
+chilower <- qchisq(.1 / 2, 18)
+chiupper <- qchisq((1 - .1 / 2), 18)
+v <- var(Y)
+var.interval <- c(degrees.freedom * v / chiupper, degrees.freedom * v / chilower)
+print(var.interval)
 
 print(paste(
-    "Our interval for sd^2 is (", (n - 1) * sd(Y) / lowerchi,
-    ",", (n - 1) * sd(Y) / upperchi, ")"
+    "Our interval for sd^2 is (", degrees.freedom * v / chiupper,
+    ",", degrees.freedom * v / chilower, ")"
 ))
