@@ -7,8 +7,10 @@ plot(ais$sport, ais$lbm,
     main = "Plot and linear fit of car weight by mileage"
 )
 mod <- lm(ais$lbm ~ ais$sport, data = ais)
+
 summary(mod)
 anova(mod)
+# BasketBall, not baseball
 # Thus we can see also p-value: 3.562e-15 that there is a
 # a high probability that the Beta estimates are 0 or correct
 # ??????
@@ -21,14 +23,15 @@ anova(mod)
 
 Z <- model.matrix(mod)
 a <- matrix(c(0, 0, 0, 0, 0, 0, 0, 0, 1, -1), ncol = 1)
-ZTZi <- solve(t(Z) % * % Z)
+ZTZi <- solve(t(Z) %*% Z)
 ZTZi
 
-atZTZia <- t(a) % * % ZTZi % * % a
+atZTZia <- t(a) %*% ZTZi %*% a
 atZTZia
 
 est <- t(a) %*% summary(mod)$coef[, 1]
 est
+# Point estimate for hw
 MSE <- anova(mod)[2, 3]
 MSE
 # t statistic for hypothesis test of H_0:alpha_3=alpha_2=0

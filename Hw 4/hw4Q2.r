@@ -17,18 +17,18 @@ pairs(un11_sub)
 
 # log trends, I do not believe linear will work here
 
-un11_sub$fertility <- log(UN11$fertility)
-names(un11_sub)[names(un11_sub) == "fertility"] <- "fertility"
-par(mfrow = c(1, 2))
-plot(UN11$fertility, UN11$ppgdp)
-plot(log(UN11$fertility), UN11$ppgdp)
+un11_sub$ppgdp <- log(UN11$ppgdp)
+# names(un11_sub)[names(un11_sub) == "ppgdb"] <- "ppgdb"
+# par(mfrow = c(1, 2))
+# plot(UN11$fertility, UN11$ppgdp)
+# plot(log(UN11$fertility), UN11$ppgdp)
 
 # definitely see a log relationship?
-un11_sub
+# un11_sub
 mod2 <- lm(fertility ~ ., data = un11_sub)
 summary(mod2)
 pairs(un11_sub)
 
-un11_sub$ppgdp <- log(UN11$ppgdp)
+un11_sub$fertility <- log(UN11$fertility)
 pairs(un11_sub)
 # I believe now a linear model is appropriate
