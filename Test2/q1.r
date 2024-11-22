@@ -46,3 +46,61 @@ print(paste(
 home_value <- crime_rate$home.value
 mean_value <- mean(home_value)
 # wish to show for hyp test H_0: mean_value - 0.3 = 0
+
+val <- -0.3
+
+an <- anova(mod)
+MSE <- an["Mean Sq"]["Residuals", ]
+Sxx <- sum((home_value - mean_value)^2)
+
+
+tstar <- (mod$coefficients["home.value"] - val) /
+    sqrt(MSE / Sxx)
+
+
+ta2 <- qt(1 - .05 / 2, length(home_value) - (6 - 1))
+
+#
+# (c)
+#
+print(paste(
+    "our test statistic:", abs(tstar), "<",
+    ta2, " which is t_.95,n_x+x_y-2"
+))
+
+# Thus we don't reject H_0
+
+
+#
+# (d)
+#
+for (i in names(crime_rate)) {
+    print(confint(mod, i, level = 0.85))
+}
+
+
+
+newdata <- data.frame(
+    home.value = 20, income = 19, open.space = 10,
+    no.plumb = 5, dist.bd = 2, north.south = 1
+)
+
+#
+# (e)
+#
+predict(mod, newdata, interval = "confidence", level = .9)
+predict(mod, newdata, level = .9)
+
+pairs(crime_rate)
+
+crime_rate2 <- crime_rate
+crime_rate2$income <- log(crime_rate$income)
+pairs(crime_rate2)
+
+mod3 <- lm(crime ~ ., data = crime_rate2)
+
+crime_rate3 <- crime_rate2
+crime_rate3$no.plumb <- log(crime_rate2$no.plumb)
+pairs(crime_rate3)
+
+mod3 <- lm(crime ~ ., data = crime_rate3)
