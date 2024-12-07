@@ -16,12 +16,14 @@ beta1.hat <- glm.logit$coefficients[5]
 
 zstar <- (beta1.hat - 0.05) / (sqrt(var.b1))
 
-z.critical <- pnorm(0.95, mean = 0, sd = 1, lower.tail = FALSE)
-
+z.critical <- qnorm(0.95, mean = 0, sd = 1)
+zstar
+z.critical
 zstar > z.critical
 # Reject?
 
 for (i in names(diabetes)) {
+    print(i)
     print(confint(glm.logit, i, level = 0.90))
 }
 

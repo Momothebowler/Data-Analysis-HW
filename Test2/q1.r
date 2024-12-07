@@ -91,16 +91,30 @@ newdata <- data.frame(
 predict(mod, newdata, interval = "confidence", level = .9)
 predict(mod, newdata, level = .9)
 
-pairs(crime_rate)
+#
+# (f)
+#
+png(filename = "pairs1.png")
+pairs(crime_rate,
+    main = "Scatterplot of pairs between all variables"
+)
+dev.off()
 
 crime_rate2 <- crime_rate
 crime_rate2$income <- log(crime_rate$income)
-pairs(crime_rate2)
-
-mod3 <- lm(crime ~ ., data = crime_rate2)
+png(filename = "pairs2.png")
+pairs(crime_rate2,
+    main = "Scatterplot of pairs between all variables\n with log of income"
+)
+dev.off()
+# mod3 <- lm(crime ~ ., data = crime_rate2)
 
 crime_rate3 <- crime_rate2
 crime_rate3$no.plumb <- log(crime_rate2$no.plumb)
-pairs(crime_rate3)
 
-mod3 <- lm(crime ~ ., data = crime_rate3)
+png(filename = "pairs3.png")
+pairs(crime_rate3,
+    main = "Scatterplot of pairs between all variables\n with log of income and log of no.plumb"
+)
+dev.off()
+# mod3 <- lm(crime ~ ., data = crime_rate3)
